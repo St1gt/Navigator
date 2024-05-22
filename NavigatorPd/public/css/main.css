@@ -1,0 +1,342 @@
+body {
+    background-image: url('/public/img/gradient.jpg');
+    background-size: cover;
+    background-repeat: repeat;
+    margin: 0;
+    overflow: hidden;
+}
+
+#mapContainer {
+    overflow: hidden; 
+}
+
+#floorSvg {
+    cursor: grab;
+    will-change: transform; 
+}
+
+#floorSvg.grabbing {
+    cursor: grabbing;
+}
+
+
+#searchContainer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    height: 7%;
+    z-index: 2;
+    background-color: #575757; 
+    padding: 10px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#floorContainer {
+    position: fixed;
+    left: 83%;
+    display: flex;
+    z-index: 3;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#searchInput {
+    margin-right: 5px;
+    padding: 8px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#searchButton,
+#filterButton {
+    padding: 10px 16px;
+    margin-left: 5px;
+    background-color: rgb(31, 212, 170); 
+    color: #9c1e1e;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+a button {
+    padding: 10px 16px;
+    margin: 5px;
+    background-color: rgb(31, 212, 170); 
+    color: #9c1e1e;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+a button:hover {
+    background-color: #0056b3;
+}
+
+#searchButton:hover,
+#filterButton:hover {
+    background-color: #0056b3;
+}
+
+#filterContainer {
+    /* display: none; */ /* Remove display: none to make the dropdown always visible */
+    position: fixed;
+    top: 7%; /* Adjust the top position based on your layout */
+    left: 38%;
+    background-color: #575757;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 3; /* Increase the z-index to ensure it's above other elements */
+}
+
+.filterSection {
+    margin-bottom: 10px;
+}
+
+.filterDropdown {
+    padding: 10px 16px;
+    background-color: rgb(31, 212, 170); 
+    color: #9c1e1e;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filterDropdown:hover {
+    background-color: #0056b3;
+}
+
+.dropdownContent {
+    /* display: none; */ /* Remove display: none to make the dropdown always visible */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdownContent label {
+    padding: 8px;
+    display: block;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.dropdownContent label:hover {
+    background-color: #ddd;
+}
+
+.selected {
+    color: rgb(31, 212, 170);
+}
+
+#shopInfoModal {
+position: absolute;
+top: 40%;
+left: 10%;
+transform: translate(-50%, -50%);
+z-index: 2;
+background-color: #f9f9f9;
+border-radius: 15px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+padding: 20px;
+font-family: 'YourChosenFont', sans-serif;
+}
+
+#shopInfoModal p {
+font-size: 16px;
+color: #333;
+width: 100%; /* Растягиваем текст на всю ширину родительского элемента */
+}
+
+#shopInfoModal button {
+background-color: #3498db;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+width: 100%; /* Растягиваем кнопку на всю ширину родительского элемента */
+}
+
+
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+    #mapContainer, #searchContainer, #floorContainer {
+        width: 100%;
+        height: auto;
+    }
+
+    #floorSvg {
+        width: 100%;
+        height: auto;
+        transform: none;
+    }
+
+    #searchContainer, #floorContainer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filterDropdown, #searchButton, #filterButton {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+
+/* постройка маршрута ==============================================*/
+#mapOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48%;
+    height: 48%;
+    pointer-events: none;
+    transform: translate(68%, 22%);
+    z-index: 2;
+}
+#ul1 {
+
+    border-bottom: none;
+    border-right: none;
+    padding: 0;
+    height: auto;
+    overflow: hidden;
+}
+
+#ul1 li {
+    list-style: none;
+    border: 0.1px solid black;
+    border-top: none;
+    border-left: none;
+    float: left;
+}
+
+#ul1 li.style1 {
+    background-color: red;
+}
+
+#ul1 li.style2 {
+    background-color: rgb(135,149,158);
+}
+
+#ul1 li.style3 {
+    background-color: orange;
+}
+
+#ul1 li.path {
+    background-color: green;
+    border-radius: 100px;
+}
+
+#ul1 li:not(.path) {
+visibility: hidden;
+}
+
+
+#btn {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+}
+
+#btn:hover {
+    background-color: #E21918;
+    color: white;
+    border-radius: 4px;
+}
+
+#routeInputs {
+display: flex;
+align-items: center;
+}
+
+.inputField {
+margin-right: 5px;
+padding: 8px;
+border: 1px solid #000000;
+border-radius: 4px;
+font-size: 14px;
+}
+
+.findRouteButton {
+padding: 10px 16px;
+background-color: rgb(31, 212, 170);
+color: #9c1e1e;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-size: 14px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.findRouteButton:hover {
+background-color: #0056b3;
+}
+#buttionConfirm button {
+        background-color: #4CAF50; /* Зеленый цвет */
+        color: white; /* Белый текст */
+        padding: 10px 20px; /* Отступы вокруг текста */
+        border: none; /* Убираем границу */
+        text-align: center; /* Выравнивание текста по центру */
+        text-decoration: none; /* Убираем подчеркивание текста */
+        display: inline-block; /* Отображаем как блочный элемент */
+        font-size: 16px; /* Размер текста */
+        cursor: pointer; /* Курсор при наведении на кнопку */
+        border-radius: 10px; /* Закругление углов */
+    }
+
+    /* Стили для закругленной кнопки */
+    #buttionConfirm button.rounded {
+        border-radius: 50%; /* Закругление углов до половины размера кнопки */
+    }
+/* =============================================================== */
+#shopListContainer {
+    position: absolute;
+    max-height: 200px;
+    overflow-y: auto;
+    border: none;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    z-index: 1;
+    top: 60px;
+}
+
+#shopListContainer.active {
+    background-color: #f4f4f4;
+    z-index: 2;
+}
+
+#shopListContainer ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#shopListContainer li {
+    margin-bottom: 5px;
+    cursor: pointer;
+    padding: 5px;
+    background-color: #f4f4f4;
+}
+
+/* Adjust the width of the category dropdown */
+.select2-container--default .select2-selection--multiple {
+    width: 200px; /* Set the desired width */
+}
